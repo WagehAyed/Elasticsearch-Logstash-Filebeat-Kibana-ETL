@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "dgSpecHash": "E/598Hf0+bJ14LvX0a4yqaf2BNqH9s1ToAyjp8FjHL1e/z2BNJ8GXzYMJ5kulA7uUj4wq79W2PS4nKYG/Gz+bA==",
+  "success": true,
+  "projectFilePath": "/Users/Wageh.Ayed/Documents/GitHub/Elasticsearch_samples/ELK-pipline/SerilogTestApp/SerilogTestApp.csproj",
+  "expectedPackageFiles": [
+    "/Users/wageh.ayed/.nuget/packages/microsoft.extensions.configuration.abstractions/8.0.0/microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
+    "/Users/wageh.ayed/.nuget/packages/microsoft.extensions.configuration.binder/8.0.0/microsoft.extensions.configuration.binder.8.0.0.nupkg.sha512",
+    "/Users/wageh.ayed/.nuget/packages/microsoft.extensions.dependencymodel/8.0.0/microsoft.extensions.dependencymodel.8.0.0.nupkg.sha512",
+    "/Users/wageh.ayed/.nuget/packages/microsoft.extensions.primitives/8.0.0/microsoft.extensions.primitives.8.0.0.nupkg.sha512",
+    "/Users/wageh.ayed/.nuget/packages/serilog/3.1.1/serilog.3.1.1.nupkg.sha512",
+    "/Users/wageh.ayed/.nuget/packages/serilog.settings.configuration/8.0.0/serilog.settings.configuration.8.0.0.nupkg.sha512",
+    "/Users/wageh.ayed/.nuget/packages/serilog.sinks.console/5.0.1/serilog.sinks.console.5.0.1.nupkg.sha512",
+    "/Users/wageh.ayed/.nuget/packages/serilog.sinks.file/5.0.0/serilog.sinks.file.5.0.0.nupkg.sha512",
+    "/Users/wageh.ayed/.nuget/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512",
+    "/Users/wageh.ayed/.nuget/packages/system.text.json/8.0.0/system.text.json.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

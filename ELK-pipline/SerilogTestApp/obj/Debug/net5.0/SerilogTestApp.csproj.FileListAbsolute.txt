@@ -1,0 +1,5 @@
+/Users/Wageh.Ayed/Documents/GitHub/Elasticsearch_samples/SerilogTestApp/obj/Debug/net5.0/SerilogTestApp.csproj.AssemblyReference.cache
+/Users/Wageh.Ayed/Documents/GitHub/Elasticsearch_samples/SerilogTestApp/obj/Debug/net5.0/SerilogTestApp.GeneratedMSBuildEditorConfig.editorconfig
+/Users/Wageh.Ayed/Documents/GitHub/Elasticsearch_samples/SerilogTestApp/obj/Debug/net5.0/SerilogTestApp.AssemblyInfoInputs.cache
+/Users/Wageh.Ayed/Documents/GitHub/Elasticsearch_samples/SerilogTestApp/obj/Debug/net5.0/SerilogTestApp.AssemblyInfo.cs
+/Users/Wageh.Ayed/Documents/GitHub/Elasticsearch_samples/SerilogTestApp/obj/Debug/net5.0/SerilogTestApp.csproj.CoreCompileInputs.cache

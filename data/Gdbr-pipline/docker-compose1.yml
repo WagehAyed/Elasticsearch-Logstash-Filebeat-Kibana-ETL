@@ -1,0 +1,53 @@
+version: '2'
+
+services:
+  Elasticsearch:
+    image: elasticsearch:7.16.2
+    container_name: elasticsearch
+    restart: always
+    volumes:
+     - elastic_data:/usr/share/elasticsearch/data/
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      discovery.type: single-node    
+    ports:
+     - '9200:9200'
+     - '9300:9300'
+    networks:
+      - elk
+   
+
+  logstash:
+    image: logstash:7.16.2
+    volumes:
+      - ./logstash/pipeline/:/usr/share/logstash/pipeline:ro
+      - ./logstash/log:/var/log/GDPR/myapplication:ro
+    command: logstash/pipeline -f /logstash/pipeline/gdpr-pipline.conf  
+    ports:
+      - "9600:9600"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      - elk
+    depends_on:
+      - Elasticsearch 
+
+  kibana:
+    image: kibana:7.16.2
+    container_name: kibana
+    ports:
+      - '5601:5601'
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200  
+    depends_on:
+      - Elasticsearch  
+    networks:
+      - elk
+
+networks:
+  elk:
+    driver: bridge
+
+volumes:
+  elastic_data:
+    driver: local
