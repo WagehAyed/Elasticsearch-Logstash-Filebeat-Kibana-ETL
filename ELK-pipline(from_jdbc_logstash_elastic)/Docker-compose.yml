@@ -3,7 +3,7 @@ services:
   Elasticsearch:
     image: elasticsearch:7.16.2
     container_name: elasticsearch
-    restart: always
+    # restart: always
     volumes:
      - elastic_data:/usr/share/elasticsearch/data/
     environment:
@@ -16,7 +16,7 @@ services:
       - elk
 
   sqlserver:
-    image: mcr.microsoft.com/mssql/server
+    image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
     environment:
       - ACCEPT_EULA=Y
@@ -24,27 +24,28 @@ services:
     ports:
       - 1433:1433
     volumes:
-      - ./jdbc:/jdbc 
+      - ./script:/docker-entrypoint-initdb.d
+      - ./jdbc:/jdbc
     networks:
       - elk
+    command: bin/bash -c "(/opt/mssql/bin/sqlservr & ) | grep -q 'Service Broker manager has started' && /opt/mssql-tools/bin/sqlcmd -U sa -P P@ssw0rd -i /docker-entrypoint-initdb.d/script.sql && sleep infinity"
 
   Logstash:
     image: logstash:7.16.2
     container_name: logstash
-    restart: always
+    # restart: always
     volumes:
       - ./logstash/:/logstash_dir
       - ./jdbc:/jdbc
-    command: logstash -f /logstash_dir/logstash.config
+    command: logstash -f /logstash_dir/jdbcTologstash.config
     depends_on:
       - Elasticsearch
       - sqlserver
     ports:
-      - '9600:9600'
+      - '9600:9600' 
     environment:
-       LS_JAVA_OPTS: "-Xmx256m -Xms256m"  
        LOGSTASH_JDBC_DRIVER: com.microsoft.sqlserver.jdbc.SQLServerDriver
-       LOGSTASH_JDBC_CONNECTION_STRING: jdbc:sqlserver://sqlserver:1433;databaseName=elasticTest
+       LOGSTASH_JDBC_CONNECTION_STRING: 'jdbc:sqlserver://sqlserver:1433;databaseName=elasticTest;encrypt=false;trustServerCertificate=true'
        LOGSTASH_JDBC_USER: sa
        LOGSTASH_JDBC_PASSWORD: P@ssw0rd  
     networks:
@@ -53,7 +54,7 @@ services:
   Kibana:
     image: kibana:7.16.2
     container_name: kibana
-    restart: always       
+    # restart: always       
     ports:
     - '5601:5601'
     environment:
@@ -62,9 +63,7 @@ services:
       - Elasticsearch  
     networks:
       - elk
-  
-
-
+   
 volumes:
   elastic_data: {}
 

@@ -1,6 +1,0 @@
-## Save in: kibana/config/kibana.yml
-# Default Kibana configuration from kibana-docker.
-
-server.name: kibana
-server.host: "0"
-elasticsearch.url: http://localhost:9200
