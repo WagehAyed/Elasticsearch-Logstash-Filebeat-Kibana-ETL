@@ -1,5 +1,3 @@
-USE MASTER ;
-GO
 IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'ElasticTest')
 BEGIN
     -- Database does not exist
@@ -13,16 +11,16 @@ BEGIN
 END
 
 GO
-
+use ElasticTest;
+Go
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Employees')
 BEGIN
     -- Table does not exist
     PRINT 'Table does not exist.'
-    use ElasticTest;
-    Go
+    
     CREATE TABLE Employees (
     ID INT PRIMARY KEY,
-    Name nvarchar(500)union select 
+    Name nvarchar(500),
     Age INT
 );
 END
