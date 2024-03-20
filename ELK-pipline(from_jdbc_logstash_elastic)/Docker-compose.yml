@@ -1,23 +1,9 @@
 version: '3.6'
-services:
-  Elasticsearch:
-    image: elasticsearch:7.16.2
-    container_name: elasticsearch
-    # restart: always
-    volumes:
-     - elastic_data:/usr/share/elasticsearch/data/
-    environment:
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-      discovery.type: single-node    
-    ports:
-     - '9200:9200'
-     - '9300:9300'
-    networks:
-      - elk
-
+services: 
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
+    restart: always
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=P@ssw0rd
@@ -33,21 +19,37 @@ services:
   Logstash:
     image: logstash:7.16.2
     container_name: logstash
-    # restart: always
+    restart: always
     volumes:
       - ./logstash/:/logstash_dir
       - ./jdbc:/jdbc
-    command: logstash -f /logstash_dir/jdbcTologstash.config
-    depends_on:
-      - Elasticsearch
+    command: logstash -f /logstash_dir/jdbcTologstash.config 
+    depends_on: 
       - sqlserver
     ports:
       - '9600:9600' 
     environment:
        LOGSTASH_JDBC_DRIVER: com.microsoft.sqlserver.jdbc.SQLServerDriver
-       LOGSTASH_JDBC_CONNECTION_STRING: 'jdbc:sqlserver://sqlserver:1433;databaseName=elasticTest;encrypt=false;trustServerCertificate=true'
+       LOGSTASH_JDBC_CONNECTION_STRING: 'jdbc:sqlserver://sqlserver:1433;databaseName=ElasticTest;encrypt=false;trustServerCertificate=true'
        LOGSTASH_JDBC_USER: sa
        LOGSTASH_JDBC_PASSWORD: P@ssw0rd  
+    networks:
+      - elk
+
+  Elasticsearch:
+    image: elasticsearch:7.16.2
+    container_name: elasticsearch
+    # restart: always
+    depends_on:
+      - Logstash
+    volumes:
+      - elastic_data:/usr/share/elasticsearch/data/
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      discovery.type: single-node    
+    ports:
+      - '9200:9200'
+      - '9300:9300'
     networks:
       - elk
 
@@ -56,7 +58,7 @@ services:
     container_name: kibana
     # restart: always       
     ports:
-    - '5601:5601'
+      - '5601:5601'
     environment:
       - ELASTICSEARCH_URL=http://elasticsearch:9200  
     depends_on:
